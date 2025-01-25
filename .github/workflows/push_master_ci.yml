@@ -29,5 +29,10 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Unit test with Maven
       run: mvn test
-
+    - uses: actions/checkout@master
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/maven@master
+      continue-on-error: true # To make sure that SARIF upload gets called
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
